@@ -7,7 +7,9 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "test": "node --test test/*.test.js",
-    "coverage": "c8 --reporter=text --reporter=lcov node --test test/*.test.js"
+    "coverage": "c8 --reporter=text --reporter=lcov node --test test/*.test.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "express": "^4.21.0"

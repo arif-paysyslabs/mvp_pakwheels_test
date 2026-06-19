@@ -58,6 +58,49 @@
     .description-section h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
     .description-section p { color: #4b5563; line-height: 1.7; font-size: 14px; }
 
+    /* Valuation Section */
+    .valuation-section { background: #fff; border-radius: 12px; padding: 24px; margin-top: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .valuation-section h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .valuation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .valuation-card { background: #f9fafb; border-radius: 10px; padding: 16px; text-align: center; }
+    .valuation-card .label { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; margin-bottom: 4px; }
+    .valuation-card .value { font-size: 22px; font-weight: 800; color: #059669; }
+    .valuation-card .value.low-conf { color: #d97706; }
+    .valuation-card .sub { font-size: 12px; color: #6b7280; margin-top: 2px; }
+    .confidence-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .confidence-badge.high { background: #d1fae5; color: #065f46; }
+    .confidence-badge.medium { background: #fef3c7; color: #92400e; }
+    .confidence-badge.low { background: #fee2e2; color: #991b1b; }
+    .depreciation-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f3f4f6; font-size: 13px; }
+    .depreciation-row:last-child { border-bottom: none; }
+    .depreciation-row .year { color: #6b7280; }
+    .depreciation-row .val { font-weight: 700; color: #374151; }
+    .comparables-list { margin-top: 16px; }
+    .comparables-list .comp-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f9fafb; border-radius: 8px; margin-bottom: 6px; font-size: 13px; }
+    .comparables-list .comp-item .comp-title { font-weight: 600; }
+    .comparables-list .comp-item .comp-price { color: #059669; font-weight: 700; }
+    .comparables-list .comp-item .comp-sim { font-size: 11px; color: #6b7280; }
+
+    /* Deal Score Badge */
+    .badge.deal-great_deal { background: #059669; color: #fff; }
+    .badge.deal-good_price { background: #34d399; color: #065f46; }
+    .badge.deal-fair_price { background: #f59e0b; color: #111827; }
+    .badge.deal-slightly_overpriced { background: #f97316; color: #fff; }
+    .badge.deal-overpriced { background: #dc2626; color: #fff; }
+
+    /* Recommendations Section */
+    .recommendations-section { background: #fff; border-radius: 12px; padding: 24px; margin-top: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .recommendations-section h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .rec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .rec-card { background: #f9fafb; border-radius: 10px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+    .rec-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .rec-card img { width: 100%; height: 140px; object-fit: cover; }
+    .rec-card .rec-info { padding: 12px; }
+    .rec-card .rec-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .rec-card .rec-info .rec-price { font-size: 16px; font-weight: 800; color: #059669; margin-bottom: 4px; }
+    .rec-card .rec-info .rec-meta { font-size: 11px; color: #6b7280; display: flex; gap: 8px; flex-wrap: wrap; }
+    .rec-card .rec-info .rec-match { font-size: 10px; color: #f59e0b; font-weight: 700; margin-top: 4px; }
+
     .loader { text-align: center; padding: 80px; }
     .loader::after { content: ''; display: inline-block; width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top-color: #f59e0b; border-radius: 50%; animation: spin 0.6s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -94,6 +137,14 @@
         .replace(/'/g, '&#39;');
     }
 
+    const DEAL_LABELS = {
+      great_deal: '🔥 Great Deal',
+      good_price: '✅ Good Price',
+      fair_price: '⚖️ Fair Price',
+      slightly_overpriced: '⚠️ Slightly Overpriced',
+      overpriced: '❌ Overpriced'
+    };
+
     async function loadCar() {
       const params = new URLSearchParams(window.location.search);
       const id = params.get('id');
@@ -107,6 +158,15 @@
 
       document.title = `${car.make} ${car.model} ${car.year} - PakWheels MVP`;
       const title = `${escapeHTML(car.make)} ${escapeHTML(car.model)} ${escapeHTML(car.year)}`;
+
+      // Fetch valuation and recommendations in parallel
+      const [valRes, recRes] = await Promise.all([
+        fetch('/api/' + type + '/' + id + '/valuation').then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch('/api/' + type + '/' + id + '/recommendations').then(r => r.ok ? r.json() : null).catch(() => null)
+      ]);
+
+      const dealBadge = valRes && valRes.dealScore ? `<span class="badge deal-${valRes.dealScore}">${DEAL_LABELS[valRes.dealScore] || valRes.dealScore}</span>` : '';
+
       document.getElementById('carDetail').innerHTML = `
         <div class="detail-grid">
           <div class="gallery">
@@ -116,6 +176,7 @@
             <div class="badges">
               ${car.featured ? '<span class="badge featured">Featured</span>' : ''}
               ${car.isCertified ? '<span class="badge certified">Certified</span>' : ''}
+              ${dealBadge}
             </div>
             <div class="price">${escapeHTML(formatPrice(car.price))}</div>
             <div class="title">${title}</div>
@@ -143,6 +204,8 @@
           </div>
         </div>
 
+        ${valRes && valRes.estimatedPrice ? renderValuation(valRes, car) : ''}
+
         <div class="features-section">
           <h3>Features</h3>
           <div class="features-grid">
@@ -154,6 +217,8 @@
           <h3>Description</h3>
           <p>${escapeHTML(car.description)}</p>
         </div>
+
+        ${recRes && recRes.length > 0 ? renderRecommendations(recRes, type) : ''}
       `;
 
       document.getElementById('btnPhoneToggle').addEventListener('click', function () {
@@ -166,6 +231,87 @@
           this.textContent = 'Show Phone Number';
         }
       });
+    }
+
+    function renderValuation(val, car) {
+      const confClass = val.confidence || 'low';
+      const confLabel = val.confidence ? val.confidence.charAt(0).toUpperCase() + val.confidence.slice(1) : 'Low';
+      const priceDiff = car.price - val.estimatedPrice;
+      const diffPct = ((priceDiff / val.estimatedPrice) * 100).toFixed(1);
+      const diffLabel = priceDiff > 0 ? `+${diffPct}% above estimate` : `${diffPct}% below estimate`;
+
+      let depreciationHTML = '';
+      if (val.depreciation && val.depreciation.length > 0) {
+        depreciationHTML = `
+          <div style="margin-top:16px;">
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:8px;">📉 Depreciation Forecast</div>
+            ${val.depreciation.map(d => `
+              <div class="depreciation-row">
+                <span class="year">${d.year}</span>
+                <span class="val">${escapeHTML(formatPrice(d.estimatedValue))}</span>
+              </div>
+            `).join('')}
+          </div>`;
+      }
+
+      let comparablesHTML = '';
+      if (val.comparables && val.comparables.length > 0) {
+        comparablesHTML = `
+          <div class="comparables-list" style="margin-top:16px;">
+            <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:8px;">🔍 Comparable Listings</div>
+            ${val.comparables.slice(0, 5).map(c => `
+              <div class="comp-item">
+                <span class="comp-title">${escapeHTML(c.make)} ${escapeHTML(c.model)} ${c.year}</span>
+                <span class="comp-price">${escapeHTML(formatPrice(c.price))}</span>
+                <span class="comp-sim">${Math.round(c.similarity * 100)}% match</span>
+              </div>
+            `).join('')}
+          </div>`;
+      }
+
+      return `
+        <div class="valuation-section">
+          <h3>🤖 AI Valuation</h3>
+          <div class="valuation-grid">
+            <div class="valuation-card">
+              <div class="label">Estimated Market Value</div>
+              <div class="value ${confClass !== 'high' ? 'low-conf' : ''}">${escapeHTML(formatPrice(val.estimatedPrice))}</div>
+              <div class="sub">${escapeHTML(diffLabel)}</div>
+            </div>
+            <div class="valuation-card">
+              <div class="label">Price Range</div>
+              <div class="value" style="font-size:16px;">${escapeHTML(formatPrice(val.priceRange.low))} – ${escapeHTML(formatPrice(val.priceRange.high))}</div>
+              <div class="sub"><span class="confidence-badge ${confClass}">${confLabel} Confidence</span></div>
+            </div>
+          </div>
+          ${depreciationHTML}
+          ${comparablesHTML}
+        </div>`;
+    }
+
+    function renderRecommendations(recs, type) {
+      const typeParam = type === 'bikes' ? 'bike' : 'car';
+      return `
+        <div class="recommendations-section">
+          <h3>💡 Similar Vehicles You May Like</h3>
+          <div class="rec-grid">
+            ${recs.map(r => `
+              <a href="/car.html?id=${encodeURIComponent(r.id)}&type=${typeParam}" class="rec-card">
+                <img src="${escapeHTML(r.image)}" alt="${escapeHTML(r.make)} ${escapeHTML(r.model)}" loading="lazy">
+                <div class="rec-info">
+                  <h4>${escapeHTML(r.make)} ${escapeHTML(r.model)} ${r.year}</h4>
+                  <div class="rec-price">${escapeHTML(formatPrice(r.price))}</div>
+                  <div class="rec-meta">
+                    <span>${escapeHTML(r.km.toLocaleString())} km</span>
+                    <span>${escapeHTML(r.fuel)}</span>
+                    <span>${escapeHTML(r.city)}</span>
+                  </div>
+                  <div class="rec-match">${Math.round(r.matchScore * 10)}% match</div>
+                </div>
+              </a>
+            `).join('')}
+          </div>
+        </div>`;
     }
 
     loadCar();

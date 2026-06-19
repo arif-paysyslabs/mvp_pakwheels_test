@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cd pakwheels-mvp && npm test",
+    "lint": "cd pakwheels-mvp && npm run lint",
+    "lint:fix": "cd pakwheels-mvp && npm run lint:fix",
+    "coverage": "cd pakwheels-mvp && npm run coverage"
   },
   "keywords": [],
   "author": "",
