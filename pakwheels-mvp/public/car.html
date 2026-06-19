@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Details - PakWheels MVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f3f4f6; color: #111827; }
+    a { text-decoration: none; color: inherit; }
+
+    .header { background: #1f2937; padding: 12px 24px; display: flex; align-items: center; gap: 32px; }
+    .header .logo { display: flex; align-items: center; }
+    .header .logo img { height: 32px; width: auto; }
+    .header .btn-post { background: #f59e0b; color: #111827; padding: 8px 20px; border-radius: 6px; font-weight: 600; font-size: 14px; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 24px; }
+
+    .back-link { display: inline-block; margin-bottom: 20px; color: #6b7280; font-size: 14px; }
+    .back-link:hover { color: #f59e0b; }
+
+    .detail-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; }
+
+    .gallery { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .gallery img { width: 100%; height: 360px; object-fit: cover; display: block; }
+
+    .sidebar { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .sidebar .price { font-size: 28px; font-weight: 800; color: #059669; margin-bottom: 4px; }
+    .sidebar .title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .sidebar .variant { color: #6b7280; font-size: 14px; margin-bottom: 16px; }
+
+    .sidebar .badges { display: flex; gap: 8px; margin-bottom: 16px; }
+    .sidebar .badge { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .sidebar .badge.featured { background: #f59e0b; color: #111827; }
+    .sidebar .badge.certified { background: #059669; color: #fff; }
+
+    .sidebar .details { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .sidebar .details .item { font-size: 13px; }
+    .sidebar .details .item strong { display: block; color: #6b7280; font-weight: 500; font-size: 11px; text-transform: uppercase; }
+
+    .sidebar .seller { border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 16px; }
+    .sidebar .seller h4 { font-size: 14px; color: #6b7280; margin-bottom: 8px; }
+    .sidebar .seller .name { font-weight: 600; font-size: 16px; }
+    .sidebar .seller .phone { color: #059669; font-weight: 600; font-size: 18px; margin-top: 4px; }
+    .sidebar .seller .type { font-size: 12px; color: #6b7280; }
+
+    .sidebar .btn-contact { display: block; width: 100%; padding: 14px; background: #059669; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 16px; text-align: center; }
+    .sidebar .btn-contact:hover { background: #047857; }
+
+    .features-section { background: #fff; border-radius: 12px; padding: 24px; margin-top: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .features-section h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+    .features-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .feature-tag { background: #fef3c7; color: #92400e; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+
+    .description-section { background: #fff; border-radius: 12px; padding: 24px; margin-top: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .description-section h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .description-section p { color: #4b5563; line-height: 1.7; font-size: 14px; }
+
+    .loader { text-align: center; padding: 80px; }
+    .loader::after { content: ''; display: inline-block; width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top-color: #f59e0b; border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 768px) {
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo"><img src="/logo.svg" alt="PakWheels"></a>
+    <a href="/sell" class="btn-post" style="margin-left:auto;">Post an Ad</a>
+  </header>
+
+  <div class="container">
+    <a href="/" class="back-link">&larr; Back to listings</a>
+    <div id="carDetail"><div class="loader"></div></div>
+  </div>
+
+  <footer style="background:#1f2937;color:#9ca3af;text-align:center;padding:24px;font-size:13px;margin-top:40px;">
+    &copy; 2026 PakWheels MVP &mdash; Demo Prototype
+  </footer>
+
+  <script>
+    function formatPrice(pkr) { return 'PKR ' + pkr.toLocaleString('en-PK'); }
+
+    function escapeHTML(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    async function loadCar() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const type = params.get('type') === 'bike' ? 'bikes' : 'cars';
+      const label = type === 'bikes' ? 'Bike' : 'Car';
+      if (!id) { document.getElementById('carDetail').innerHTML = `<div class="empty">${label} not found</div>`; return; }
+
+      const res = await fetch('/api/' + type + '/' + id);
+      if (!res.ok) { document.getElementById('carDetail').innerHTML = `<div class="empty">${label} not found</div>`; return; }
+      const car = await res.json();
+
+      document.title = `${car.make} ${car.model} ${car.year} - PakWheels MVP`;
+      const title = `${escapeHTML(car.make)} ${escapeHTML(car.model)} ${escapeHTML(car.year)}`;
+      document.getElementById('carDetail').innerHTML = `
+        <div class="detail-grid">
+          <div class="gallery">
+            <img src="${escapeHTML(car.images?.[0] || '')}" alt="${title}">
+          </div>
+          <div class="sidebar">
+            <div class="badges">
+              ${car.featured ? '<span class="badge featured">Featured</span>' : ''}
+              ${car.isCertified ? '<span class="badge certified">Certified</span>' : ''}
+            </div>
+            <div class="price">${escapeHTML(formatPrice(car.price))}</div>
+            <div class="title">${title}</div>
+            <div class="variant">${escapeHTML(car.variant)}</div>
+
+            <div class="details">
+              <div class="item"><strong>Mileage</strong>${escapeHTML(car.km.toLocaleString())} km</div>
+              <div class="item"><strong>Fuel</strong>${escapeHTML(car.fuel)}</div>
+              <div class="item"><strong>Transmission</strong>${escapeHTML(car.transmission)}</div>
+              <div class="item"><strong>Engine</strong>${escapeHTML(car.engineCC)} cc</div>
+              <div class="item"><strong>Color</strong>${escapeHTML(car.color)}</div>
+              <div class="item"><strong>Body Type</strong>${escapeHTML(car.bodyType)}</div>
+              <div class="item"><strong>Registration</strong>${escapeHTML(car.registeredIn)}</div>
+              <div class="item"><strong>Assembly</strong>${escapeHTML(car.assembly)}</div>
+            </div>
+
+            <div class="seller">
+              <h4>Seller Information</h4>
+              <div class="name">${escapeHTML(car.seller.name)}</div>
+              <div class="phone" style="visibility:hidden;">${escapeHTML(car.seller.phone)}</div>
+              <div class="type">${escapeHTML(car.seller.type)}</div>
+            </div>
+
+            <div class="btn-contact" id="btnPhoneToggle">Show Phone Number</div>
+          </div>
+        </div>
+
+        <div class="features-section">
+          <h3>Features</h3>
+          <div class="features-grid">
+            ${car.features.map(f => `<span class="feature-tag">${escapeHTML(f)}</span>`).join('')}
+          </div>
+        </div>
+
+        <div class="description-section">
+          <h3>Description</h3>
+          <p>${escapeHTML(car.description)}</p>
+        </div>
+      `;
+
+      document.getElementById('btnPhoneToggle').addEventListener('click', function () {
+        const phoneEl = document.querySelector('.phone');
+        if (phoneEl.style.visibility === 'hidden') {
+          phoneEl.style.visibility = '';
+          this.textContent = 'Hide Phone Number';
+        } else {
+          phoneEl.style.visibility = 'hidden';
+          this.textContent = 'Show Phone Number';
+        }
+      });
+    }
+
+    loadCar();
+  </script>
+</body>
+</html>

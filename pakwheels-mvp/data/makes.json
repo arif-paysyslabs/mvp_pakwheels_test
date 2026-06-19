@@ -1,0 +1,18 @@
+[
+  { "id": 1, "name": "Toyota", "logo": "https://placehold.co/60x40/dc2626/ffffff?text=Toyota", "category": "car" },
+  { "id": 2, "name": "Honda", "logo": "https://placehold.co/60x40/2563eb/ffffff?text=Honda", "category": "both" },
+  { "id": 3, "name": "Suzuki", "logo": "https://placehold.co/60x40/16a34a/ffffff?text=Suzuki", "category": "both" },
+  { "id": 4, "name": "KIA", "logo": "https://placehold.co/60x40/ea580c/ffffff?text=KIA", "category": "car" },
+  { "id": 5, "name": "Hyundai", "logo": "https://placehold.co/60x40/6b7280/ffffff?text=Hyundai", "category": "car" },
+  { "id": 6, "name": "Haval", "logo": "https://placehold.co/60x40/7c3aed/ffffff?text=Haval", "category": "car" },
+  { "id": 7, "name": "Changan", "logo": "https://placehold.co/60x40/0891b2/ffffff?text=Changan", "category": "car" },
+  { "id": 8, "name": "MG", "logo": "https://placehold.co/60x40/be185d/ffffff?text=MG", "category": "car" },
+  { "id": 9, "name": "Daihatsu", "logo": "https://placehold.co/60x40/92400e/ffffff?text=Daihatsu", "category": "car" },
+  { "id": 10, "name": "BMW", "logo": "https://placehold.co/60x40/1d4ed8/ffffff?text=BMW", "category": "car" },
+  { "id": 11, "name": "Audi", "logo": "https://placehold.co/60x40/111827/ffffff?text=Audi", "category": "car" },
+  { "id": 12, "name": "Mercedes", "logo": "https://placehold.co/60x40/374151/ffffff?text=Mercedes", "category": "car" },
+  { "id": 13, "name": "Yamaha", "logo": "https://placehold.co/60x40/2563eb/ffffff?text=Yamaha", "category": "bike" },
+  { "id": 14, "name": "United", "logo": "https://placehold.co/60x40/ea580c/ffffff?text=United", "category": "bike" },
+  { "id": 15, "name": "Road Prince", "logo": "https://placehold.co/60x40/4b5563/ffffff?text=Road+Prince", "category": "bike" },
+  { "id": 16, "name": "Super Power", "logo": "https://placehold.co/60x40/b91c1c/ffffff?text=Super+Power", "category": "bike" }
+]

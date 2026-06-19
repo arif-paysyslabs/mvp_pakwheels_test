@@ -1,0 +1,331 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PakWheels MVP API",
+    "description": "RESTful API for the PakWheels vehicle listing platform. Browse cars & bikes, filter listings, and post new ads — all tailored for the Pakistani market.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "PakWheels MVP",
+      "url": "http://localhost:3000"
+    }
+  },
+  "servers": [
+    { "url": "http://localhost:3000", "description": "Local development server" }
+  ],
+  "tags": [
+    { "name": "Cars", "description": "Car listings and management" },
+    { "name": "Bikes", "description": "Bike listings and management" },
+    { "name": "Makes", "description": "Vehicle makes/brands" },
+    { "name": "Cities", "description": "Available cities" }
+  ],
+  "paths": {
+    "/api/cars": {
+      "get": {
+        "tags": ["Cars"],
+        "summary": "List all cars",
+        "description": "Returns all car listings. Results are sorted with featured cars first. Supports multiple filter parameters that combine as AND conditions.",
+        "parameters": [
+          { "name": "make", "in": "query", "description": "Filter by make (exact match, case-insensitive)", "schema": { "type": "string", "example": "Toyota" } },
+          { "name": "model", "in": "query", "description": "Filter by model (substring match, case-insensitive)", "schema": { "type": "string", "example": "Corolla" } },
+          { "name": "city", "in": "query", "description": "Filter by city (exact match, case-insensitive)", "schema": { "type": "string", "example": "Karachi" } },
+          { "name": "minPrice", "in": "query", "description": "Minimum price in PKR", "schema": { "type": "integer", "example": 1000000 } },
+          { "name": "maxPrice", "in": "query", "description": "Maximum price in PKR", "schema": { "type": "integer", "example": 10000000 } },
+          { "name": "minYear", "in": "query", "description": "Minimum model year", "schema": { "type": "integer", "example": 2020 } },
+          { "name": "maxYear", "in": "query", "description": "Maximum model year", "schema": { "type": "integer", "example": 2025 } },
+          { "name": "fuel", "in": "query", "description": "Fuel type (exact match, case-insensitive)", "schema": { "type": "string", "enum": ["Petrol", "Diesel", "CNG", "Hybrid", "Electric"] } },
+          { "name": "transmission", "in": "query", "description": "Transmission type (exact match, case-insensitive)", "schema": { "type": "string", "enum": ["Manual", "Automatic"] } },
+          { "name": "search", "in": "query", "description": "Search across make, model, variant, and city (substring match, case-insensitive)", "schema": { "type": "string", "example": "corolla" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of car listings",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Car" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Cars"],
+        "summary": "Create a new car listing",
+        "description": "Posts a new car advertisement. The `featured`, `isCertified`, and `postedDate` fields are automatically set by the server.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CarInput" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Car created successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Car" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cars/{id}": {
+      "get": {
+        "tags": ["Cars"],
+        "summary": "Get a single car by ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "Car ID", "schema": { "type": "integer", "example": 1 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Car" } } }
+          },
+          "404": {
+            "description": "Car not found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+          }
+        }
+      }
+    },
+    "/api/bikes": {
+      "get": {
+        "tags": ["Bikes"],
+        "summary": "List all bikes",
+        "description": "Returns all bike listings. Results are sorted with featured bikes first. Supports the same filter parameters as cars.",
+        "parameters": [
+          { "name": "make", "in": "query", "description": "Filter by make (exact match, case-insensitive)", "schema": { "type": "string", "example": "Honda" } },
+          { "name": "model", "in": "query", "description": "Filter by model (substring match, case-insensitive)", "schema": { "type": "string", "example": "CG 125" } },
+          { "name": "city", "in": "query", "description": "Filter by city (exact match, case-insensitive)", "schema": { "type": "string", "example": "Lahore" } },
+          { "name": "minPrice", "in": "query", "description": "Minimum price in PKR", "schema": { "type": "integer", "example": 50000 } },
+          { "name": "maxPrice", "in": "query", "description": "Maximum price in PKR", "schema": { "type": "integer", "example": 200000 } },
+          { "name": "minYear", "in": "query", "description": "Minimum model year", "schema": { "type": "integer" } },
+          { "name": "maxYear", "in": "query", "description": "Maximum model year", "schema": { "type": "integer" } },
+          { "name": "fuel", "in": "query", "description": "Fuel type", "schema": { "type": "string", "enum": ["Petrol", "Diesel", "CNG", "Hybrid", "Electric"] } },
+          { "name": "transmission", "in": "query", "description": "Transmission type", "schema": { "type": "string", "enum": ["Manual", "Automatic"] } },
+          { "name": "search", "in": "query", "description": "Search across make, model, variant, and city", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of bike listings",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Bike" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Bikes"],
+        "summary": "Create a new bike listing",
+        "description": "Posts a new bike advertisement. Bike IDs start at 1001. The `featured`, `isCertified`, and `postedDate` fields are automatically set.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/BikeInput" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Bike created successfully",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Bike" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bikes/{id}": {
+      "get": {
+        "tags": ["Bikes"],
+        "summary": "Get a single bike by ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "description": "Bike ID", "schema": { "type": "integer", "example": 1001 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bike details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Bike" } } }
+          },
+          "404": {
+            "description": "Bike not found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+          }
+        }
+      }
+    },
+    "/api/makes": {
+      "get": {
+        "tags": ["Makes"],
+        "summary": "List vehicle makes/brands",
+        "description": "Returns all makes, optionally filtered by vehicle type.",
+        "parameters": [
+          { "name": "type", "in": "query", "description": "Filter by vehicle type", "schema": { "type": "string", "enum": ["car", "bike"] } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of makes",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Make" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cities": {
+      "get": {
+        "tags": ["Cities"],
+        "summary": "List all cities",
+        "description": "Returns an array of Pakistani city names.",
+        "responses": {
+          "200": {
+            "description": "Array of city names",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Car": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "make": { "type": "string", "example": "Toyota" },
+          "model": { "type": "string", "example": "Corolla" },
+          "variant": { "type": "string", "example": "Altis 1.6 CVT" },
+          "year": { "type": "integer", "example": 2021 },
+          "price": { "type": "integer", "description": "Price in PKR", "example": 6500000 },
+          "city": { "type": "string", "example": "Karachi" },
+          "km": { "type": "integer", "description": "Mileage in kilometers", "example": 35000 },
+          "fuel": { "type": "string", "enum": ["Petrol", "Diesel", "CNG", "Hybrid", "Electric"], "example": "Petrol" },
+          "transmission": { "type": "string", "enum": ["Manual", "Automatic"], "example": "Automatic" },
+          "bodyType": { "type": "string", "example": "Sedan" },
+          "engineCC": { "type": "integer", "example": 1600 },
+          "color": { "type": "string", "example": "White" },
+          "registeredIn": { "type": "string", "example": "Karachi" },
+          "assembly": { "type": "string", "example": "Local" },
+          "features": { "type": "array", "items": { "type": "string" }, "example": ["Power Steering", "AC", "Cruise Control"] },
+          "description": { "type": "string", "example": "Excellent condition, regularly serviced." },
+          "images": { "type": "array", "items": { "type": "string", "format": "uri" }, "example": ["https://placehold.co/600x400"] },
+          "featured": { "type": "boolean", "description": "Read-only — auto-set to false on creation", "example": true },
+          "isCertified": { "type": "boolean", "description": "Read-only — auto-set to false on creation", "example": false },
+          "seller": { "$ref": "#/components/schemas/Seller" },
+          "postedDate": { "type": "string", "format": "date", "description": "Auto-set to current date", "example": "2026-06-08" }
+        }
+      },
+      "CarInput": {
+        "type": "object",
+        "required": ["make", "model", "year", "price", "city", "km"],
+        "properties": {
+          "make": { "type": "string", "example": "Toyota" },
+          "model": { "type": "string", "example": "Corolla" },
+          "variant": { "type": "string", "example": "Altis 1.6 CVT" },
+          "year": { "type": "integer", "example": 2024 },
+          "price": { "type": "integer", "description": "Price in PKR", "example": 7500000 },
+          "city": { "type": "string", "example": "Lahore" },
+          "km": { "type": "integer", "example": 5000 },
+          "fuel": { "type": "string", "example": "Petrol" },
+          "transmission": { "type": "string", "example": "Automatic" },
+          "bodyType": { "type": "string", "example": "Sedan" },
+          "engineCC": { "type": "integer", "example": 1600 },
+          "color": { "type": "string", "example": "White" },
+          "registeredIn": { "type": "string", "example": "Lahore" },
+          "assembly": { "type": "string", "example": "Local" },
+          "features": { "type": "array", "items": { "type": "string" } },
+          "description": { "type": "string", "example": "Brand new condition." },
+          "images": { "type": "array", "items": { "type": "string", "format": "uri" } },
+          "seller": { "$ref": "#/components/schemas/Seller" }
+        }
+      },
+      "Bike": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1001 },
+          "make": { "type": "string", "example": "Honda" },
+          "model": { "type": "string", "example": "CG 125" },
+          "variant": { "type": "string", "example": "2022 Model" },
+          "year": { "type": "integer", "example": 2022 },
+          "price": { "type": "integer", "example": 95000 },
+          "city": { "type": "string", "example": "Karachi" },
+          "km": { "type": "integer", "example": 12000 },
+          "fuel": { "type": "string", "enum": ["Petrol", "Diesel", "CNG", "Hybrid", "Electric"], "example": "Petrol" },
+          "transmission": { "type": "string", "enum": ["Manual", "Automatic"], "example": "Manual" },
+          "bodyType": { "type": "string", "example": "Motorcycle" },
+          "engineCC": { "type": "integer", "example": 125 },
+          "color": { "type": "string", "example": "Red" },
+          "registeredIn": { "type": "string", "example": "Karachi" },
+          "assembly": { "type": "string", "example": "Local" },
+          "features": { "type": "array", "items": { "type": "string" } },
+          "description": { "type": "string" },
+          "images": { "type": "array", "items": { "type": "string", "format": "uri" } },
+          "featured": { "type": "boolean", "example": true },
+          "isCertified": { "type": "boolean", "example": false },
+          "seller": { "$ref": "#/components/schemas/Seller" },
+          "postedDate": { "type": "string", "format": "date", "example": "2026-06-01" }
+        }
+      },
+      "BikeInput": {
+        "type": "object",
+        "required": ["make", "model", "year", "price", "city", "km"],
+        "properties": {
+          "make": { "type": "string", "example": "Yamaha" },
+          "model": { "type": "string", "example": "YBR 125" },
+          "variant": { "type": "string", "example": "2024 Model" },
+          "year": { "type": "integer", "example": 2024 },
+          "price": { "type": "integer", "example": 150000 },
+          "city": { "type": "string", "example": "Islamabad" },
+          "km": { "type": "integer", "example": 2000 },
+          "fuel": { "type": "string", "example": "Petrol" },
+          "transmission": { "type": "string", "example": "Manual" },
+          "bodyType": { "type": "string", "example": "Motorcycle" },
+          "engineCC": { "type": "integer", "example": 125 },
+          "color": { "type": "string", "example": "Black" },
+          "registeredIn": { "type": "string" },
+          "assembly": { "type": "string" },
+          "features": { "type": "array", "items": { "type": "string" } },
+          "description": { "type": "string" },
+          "images": { "type": "array", "items": { "type": "string", "format": "uri" } },
+          "seller": { "$ref": "#/components/schemas/Seller" }
+        }
+      },
+      "Make": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "name": { "type": "string", "example": "Toyota" },
+          "logo": { "type": "string", "format": "uri", "example": "https://placehold.co/60x40/dc2626/ffffff?text=Toyota" },
+          "category": { "type": "string", "enum": ["car", "bike", "both"], "example": "car" }
+        }
+      },
+      "Seller": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "Ahmed Khan" },
+          "phone": { "type": "string", "example": "0300-1234567" },
+          "type": { "type": "string", "example": "Individual" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string", "example": "Car not found" }
+        }
+      }
+    }
+  }
+}

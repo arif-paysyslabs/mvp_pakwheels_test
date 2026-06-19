@@ -1,0 +1,342 @@
+[
+  {
+    "id": 1001,
+    "make": "Honda",
+    "model": "CG 125",
+    "variant": "2022 Model",
+    "year": 2022,
+    "price": 95000,
+    "city": "Karachi",
+    "km": 12000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Motorcycle",
+    "engineCC": 125,
+    "color": "Red",
+    "registeredIn": "Karachi",
+    "assembly": "Local",
+    "features": [
+      "Electric Start",
+      "Alloy Rims",
+      "Disc Brake",
+      "Digital Speedometer"
+    ],
+    "description": "Excellent condition, single owner, regularly serviced. Non-accidental. Perfect for daily commute.",
+    "images": [
+      "https://placehold.co/600x400/dc2626/ffffff?text=Honda+CG125+2022"
+    ],
+    "featured": true,
+    "isCertified": false,
+    "seller": {
+      "name": "Bilal Ahmed",
+      "phone": "0300-2345678",
+      "type": "Individual"
+    },
+    "postedDate": "2026-06-01"
+  },
+  {
+    "id": 1002,
+    "make": "Yamaha",
+    "model": "YBR 125",
+    "variant": "2021 Model",
+    "year": 2021,
+    "price": 120000,
+    "city": "Lahore",
+    "km": 18000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Motorcycle",
+    "engineCC": 125,
+    "color": "Black",
+    "registeredIn": "Lahore",
+    "assembly": "Local",
+    "features": [
+      "Electric Start",
+      "Disc Brake",
+      "Fuel Injection"
+    ],
+    "description": "Well maintained Yamaha YBR in great condition. Fuel injected engine gives excellent mileage.",
+    "images": [
+      "https://placehold.co/600x400/2563eb/ffffff?text=Yamaha+YBR125+2021"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Usman Tariq",
+      "phone": "0300-3456789",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-25"
+  },
+  {
+    "id": 1003,
+    "make": "Suzuki",
+    "model": "GS 150",
+    "variant": "SE Model",
+    "year": 2023,
+    "price": 185000,
+    "city": "Islamabad",
+    "km": 6000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Motorcycle",
+    "engineCC": 150,
+    "color": "Blue",
+    "registeredIn": "Islamabad",
+    "assembly": "Local",
+    "features": [
+      "Electric Start",
+      "Disc Brake",
+      "Digital Speedometer",
+      "Alloy Rims"
+    ],
+    "description": "Almost new Suzuki GS 150 SE. Only 6k driven. Perfect condition with all original parts.",
+    "images": [
+      "https://placehold.co/600x400/16a34a/ffffff?text=Suzuki+GS150+2023"
+    ],
+    "featured": true,
+    "isCertified": false,
+    "seller": {
+      "name": "Hassan Raza",
+      "phone": "0300-4567890",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-06-03"
+  },
+  {
+    "id": 1004,
+    "make": "Honda",
+    "model": "CD 70",
+    "variant": "Dream 2020",
+    "year": 2020,
+    "price": 55000,
+    "city": "Faisalabad",
+    "km": 35000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Motorcycle",
+    "engineCC": 70,
+    "color": "Black",
+    "registeredIn": "Faisalabad",
+    "assembly": "Local",
+    "features": [
+      "Kick Start",
+      "Chrome Exhaust"
+    ],
+    "description": "Reliable Honda CD 70. Great fuel average, perfect for city rides. Minor scratches.",
+    "images": [
+      "https://placehold.co/600x400/111827/ffffff?text=Honda+CD70+2020"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Imran Ali",
+      "phone": "0300-5678901",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-20"
+  },
+  {
+    "id": 1005,
+    "make": "Yamaha",
+    "model": "YBR 150",
+    "variant": "2022 Model",
+    "year": 2022,
+    "price": 210000,
+    "city": "Rawalpindi",
+    "km": 8000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Motorcycle",
+    "engineCC": 150,
+    "color": "Grey",
+    "registeredIn": "Rawalpindi",
+    "assembly": "Local",
+    "features": [
+      "Electric Start",
+      "Disc Brake",
+      "Fuel Injection",
+      "Digital Speedometer"
+    ],
+    "description": "Yamaha YBR 150 in mint condition. Fuel injected, powerful 150cc engine. First owner.",
+    "images": [
+      "https://placehold.co/600x400/6b7280/ffffff?text=Yamaha+YBR150+2022"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Kamran Shah",
+      "phone": "0300-6789012",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-30"
+  },
+  {
+    "id": 1006,
+    "make": "United",
+    "model": "US 125",
+    "variant": "Euro II",
+    "year": 2024,
+    "price": 125000,
+    "city": "Multan",
+    "km": 2000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Motorcycle",
+    "engineCC": 125,
+    "color": "Red",
+    "registeredIn": "Multan",
+    "assembly": "Local",
+    "features": [
+      "Electric Start",
+      "Self Start",
+      "Disc Brake"
+    ],
+    "description": "Brand new condition United US 125. Only 2000 km on odometer. Under warranty.",
+    "images": [
+      "https://placehold.co/600x400/ea580c/ffffff?text=United+US125+2024"
+    ],
+    "featured": false,
+    "isCertified": true,
+    "seller": {
+      "name": "Auto Mart",
+      "phone": "0300-7890123",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-06-04"
+  },
+  {
+    "id": 1007,
+    "make": "Suzuki",
+    "model": "GR 150",
+    "variant": "2023 Model",
+    "year": 2023,
+    "price": 240000,
+    "city": "Peshawar",
+    "km": 4000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Sports",
+    "engineCC": 150,
+    "color": "Orange",
+    "registeredIn": "Peshawar",
+    "assembly": "Local",
+    "features": [
+      "Electric Start",
+      "Rear Disc Brake",
+      "Alloy Rims",
+      "LED Headlight"
+    ],
+    "description": "Sporty Suzuki GR 150 in stunning orange. Very low mileage, showroom condition.",
+    "images": [
+      "https://placehold.co/600x400/f97316/ffffff?text=Suzuki+GR150+2023"
+    ],
+    "featured": true,
+    "isCertified": false,
+    "seller": {
+      "name": "Faisal Motors",
+      "phone": "0300-8901234",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-28"
+  },
+  {
+    "id": 1008,
+    "make": "Honda",
+    "model": "CD 70",
+    "variant": "Pridor 2021",
+    "year": 2021,
+    "price": 68000,
+    "city": "Karachi",
+    "km": 22000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Motorcycle",
+    "engineCC": 70,
+    "color": "Silver",
+    "registeredIn": "Karachi",
+    "assembly": "Local",
+    "features": [
+      "Electric Start",
+      "Chrome Exhaust"
+    ],
+    "description": "Honda Pridor in good condition. Genuine reason for sale. All papers complete.",
+    "images": [
+      "https://placehold.co/600x400/9ca3af/ffffff?text=Honda+Pridor+2021"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Rashid Mehmood",
+      "phone": "0300-9012345",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-22"
+  },
+  {
+    "id": 1009,
+    "make": "Road Prince",
+    "model": "RP 70",
+    "variant": "WeGo",
+    "year": 2023,
+    "price": 72000,
+    "city": "Lahore",
+    "km": 10000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Motorcycle",
+    "engineCC": 70,
+    "color": "Black",
+    "registeredIn": "Lahore",
+    "assembly": "Local",
+    "features": [
+      "Electric Start",
+      "Digital Speedometer"
+    ],
+    "description": "Road Prince WeGo in excellent condition. Economical, reliable, and low maintenance.",
+    "images": [
+      "https://placehold.co/600x400/4b5563/ffffff?text=Road+Prince+WeGo+2023"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Shahid Latif",
+      "phone": "0300-0123456",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-18"
+  },
+  {
+    "id": 1010,
+    "make": "Super Power",
+    "model": "SP 70",
+    "variant": "Plus",
+    "year": 2022,
+    "price": 48000,
+    "city": "Sialkot",
+    "km": 28000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Motorcycle",
+    "engineCC": 70,
+    "color": "Red",
+    "registeredIn": "Sialkot",
+    "assembly": "Local",
+    "features": [
+      "Kick Start",
+      "Side Mirror"
+    ],
+    "description": "Budget-friendly Super Power 70. Runs perfectly, ideal for daily use. Price is negotiable.",
+    "images": [
+      "https://placehold.co/600x400/b91c1c/ffffff?text=Super+Power+SP70+2022"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Naveed Akram",
+      "phone": "0301-1234567",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-15"
+  }
+]

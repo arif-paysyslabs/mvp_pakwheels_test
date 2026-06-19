@@ -1,0 +1,741 @@
+[
+  {
+    "id": 1,
+    "make": "Toyota",
+    "model": "Corolla",
+    "variant": "Altis 1.6 CVT",
+    "year": 2021,
+    "price": 6500000,
+    "city": "Karachi",
+    "km": 35000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "Sedan",
+    "engineCC": 1600,
+    "color": "White",
+    "registeredIn": "Karachi",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Cruise Control",
+      "LED Headlights"
+    ],
+    "description": "Excellent condition, regularly serviced at Toyota dealership. First owner. Non-accidental.",
+    "images": [
+      "https://placehold.co/600x400/2563eb/ffffff?text=Corolla+2021"
+    ],
+    "featured": true,
+    "isCertified": false,
+    "seller": {
+      "name": "Ahmed Khan",
+      "phone": "0300-1234567",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-28"
+  },
+  {
+    "id": 2,
+    "make": "Honda",
+    "model": "Civic",
+    "variant": "Oriel 1.8 CVT",
+    "year": 2020,
+    "price": 5800000,
+    "city": "Lahore",
+    "km": 42000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "Sedan",
+    "engineCC": 1800,
+    "color": "Black",
+    "registeredIn": "Lahore",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Sunroof",
+      "Alloy Rims",
+      "Reverse Camera"
+    ],
+    "description": "Well maintained Honda Civic Oriel 2020 model. Driven 42k km. Paint and interior in excellent condition.",
+    "images": [
+      "https://placehold.co/600x400/dc2626/ffffff?text=Civic+2020"
+    ],
+    "featured": true,
+    "isCertified": true,
+    "seller": {
+      "name": "Bilal Autos",
+      "phone": "042-1234567",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-30"
+  },
+  {
+    "id": 3,
+    "make": "Suzuki",
+    "model": "Alto",
+    "variant": "VXL AGS",
+    "year": 2023,
+    "price": 2650000,
+    "city": "Islamabad",
+    "km": 12000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "Hatchback",
+    "engineCC": 660,
+    "color": "Red",
+    "registeredIn": "Islamabad",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Keyless Entry",
+      "Airbags"
+    ],
+    "description": "Brand new condition, still under warranty. Only 12k km driven. Perfect city car.",
+    "images": [
+      "https://placehold.co/600x400/ea580c/ffffff?text=Alto+2023"
+    ],
+    "featured": false,
+    "isCertified": true,
+    "seller": {
+      "name": "Suzuki Central",
+      "phone": "051-1234567",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-06-01"
+  },
+  {
+    "id": 4,
+    "make": "Honda",
+    "model": "City",
+    "variant": "1.5 CVT",
+    "year": 2022,
+    "price": 4200000,
+    "city": "Rawalpindi",
+    "km": 25000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "Sedan",
+    "engineCC": 1500,
+    "color": "Grey",
+    "registeredIn": "Rawalpindi",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Touchscreen",
+      "Keyless Entry"
+    ],
+    "description": "Honda City 2022 model in excellent shape. First owner, insured, all service records available.",
+    "images": [
+      "https://placehold.co/600x400/6b7280/ffffff?text=City+2022"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Sajid Hussain",
+      "phone": "0321-7654321",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-25"
+  },
+  {
+    "id": 5,
+    "make": "Suzuki",
+    "model": "Cultus",
+    "variant": "VXL",
+    "year": 2021,
+    "price": 2800000,
+    "city": "Faisalabad",
+    "km": 38000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Hatchback",
+    "engineCC": 1000,
+    "color": "Silver",
+    "registeredIn": "Faisalabad",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Alloy Rims"
+    ],
+    "description": "Suzuki Cultus VXL 2021. Well maintained, genuine mileage. Ideal family hatchback.",
+    "images": [
+      "https://placehold.co/600x400/9ca3af/ffffff?text=Cultus+2021"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Kamran Autos",
+      "phone": "041-1234567",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-20"
+  },
+  {
+    "id": 6,
+    "make": "Toyota",
+    "model": "Yaris",
+    "variant": "ATIV CVT 1.3",
+    "year": 2022,
+    "price": 3900000,
+    "city": "Karachi",
+    "km": 18000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "Sedan",
+    "engineCC": 1300,
+    "color": "Blue",
+    "registeredIn": "Karachi",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Touchscreen",
+      "Reverse Camera",
+      "Steering Controls"
+    ],
+    "description": "Toyota Yaris ATIV 2022. Low mileage, great fuel economy. One owner car.",
+    "images": [
+      "https://placehold.co/600x400/1d4ed8/ffffff?text=Yaris+2022"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Fahad Ali",
+      "phone": "0333-9876543",
+      "type": "Individual"
+    },
+    "postedDate": "2026-06-02"
+  },
+  {
+    "id": 7,
+    "make": "KIA",
+    "model": "Sportage",
+    "variant": "Alpha 2.0 AWD",
+    "year": 2023,
+    "price": 8500000,
+    "city": "Lahore",
+    "km": 15000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "SUV",
+    "engineCC": 2000,
+    "color": "White",
+    "registeredIn": "Lahore",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Sunroof",
+      "Leather Seats",
+      "Navigation",
+      "360 Camera",
+      "Keyless Entry"
+    ],
+    "description": "KIA Sportage Alpha AWD 2023. Top of the line variant. Like new condition.",
+    "images": [
+      "https://placehold.co/600x400/ffffff/000000?text=Sportage+2023"
+    ],
+    "featured": true,
+    "isCertified": true,
+    "seller": {
+      "name": "KIA Motors Lahore",
+      "phone": "042-7654321",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-29"
+  },
+  {
+    "id": 8,
+    "make": "Suzuki",
+    "model": "Wagon R",
+    "variant": "VXR",
+    "year": 2022,
+    "price": 3100000,
+    "city": "Peshawar",
+    "km": 22000,
+    "fuel": "CNG",
+    "transmission": "Manual",
+    "bodyType": "Hatchback",
+    "engineCC": 1000,
+    "color": "White",
+    "registeredIn": "Peshawar",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "CNG Kit"
+    ],
+    "description": "Suzuki Wagon R with factory fitted CNG. Very economical. Good condition.",
+    "images": [
+      "https://placehold.co/600x400/fef3c7/000000?text=Wagon+R+2022"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Rashid Khan",
+      "phone": "0345-1112223",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-22"
+  },
+  {
+    "id": 9,
+    "make": "Toyota",
+    "model": "Fortuner",
+    "variant": "2.7 G",
+    "year": 2021,
+    "price": 12500000,
+    "city": "Islamabad",
+    "km": 45000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "SUV",
+    "engineCC": 2700,
+    "color": "Black",
+    "registeredIn": "Islamabad",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "4x4",
+      "Leather Seats",
+      "Sunroof",
+      "Navigation",
+      "Cruise Control"
+    ],
+    "description": "Toyota Fortuner 2.7 G 2021. Powerful SUV, perfectly maintained. Great for off-road and family trips.",
+    "images": [
+      "https://placehold.co/600x400/1f2937/ffffff?text=Fortuner+2021"
+    ],
+    "featured": true,
+    "isCertified": false,
+    "seller": {
+      "name": "Capital Motors",
+      "phone": "051-3456789",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-26"
+  },
+  {
+    "id": 10,
+    "make": "Honda",
+    "model": "BR-V",
+    "variant": "S CVT",
+    "year": 2023,
+    "price": 5300000,
+    "city": "Multan",
+    "km": 10000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "SUV",
+    "engineCC": 1500,
+    "color": "Brown",
+    "registeredIn": "Multan",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "7 Seater",
+      "Touchscreen",
+      "Reverse Camera"
+    ],
+    "description": "Honda BR-V 2023. Only 10k km driven. 7-seater, perfect for large families. Still under warranty.",
+    "images": [
+      "https://placehold.co/600x400/78350f/ffffff?text=BR-V+2023"
+    ],
+    "featured": false,
+    "isCertified": true,
+    "seller": {
+      "name": "Honda Multan",
+      "phone": "061-1234567",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-06-01"
+  },
+  {
+    "id": 11,
+    "make": "Suzuki",
+    "model": "Mehran",
+    "variant": "VX",
+    "year": 2018,
+    "price": 950000,
+    "city": "Karachi",
+    "km": 65000,
+    "fuel": "CNG",
+    "transmission": "Manual",
+    "bodyType": "Hatchback",
+    "engineCC": 800,
+    "color": "White",
+    "registeredIn": "Karachi",
+    "assembly": "Local",
+    "features": [
+      "AC",
+      "CNG Kit",
+      "Cassette Player"
+    ],
+    "description": "Suzuki Mehran 2018. Cheap running costs with CNG. Reliable city car. Very affordable.",
+    "images": [
+      "https://placehold.co/600x400/e5e7eb/000000?text=Mehran+2018"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Imran Shah",
+      "phone": "0312-3456789",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-18"
+  },
+  {
+    "id": 12,
+    "make": "Hyundai",
+    "model": "Tucson",
+    "variant": "2.0 GLS",
+    "year": 2022,
+    "price": 7200000,
+    "city": "Lahore",
+    "km": 28000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "SUV",
+    "engineCC": 2000,
+    "color": "Dark Grey",
+    "registeredIn": "Lahore",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Sunroof",
+      "Leather Seats",
+      "Push Start",
+      "Ventilated Seats"
+    ],
+    "description": "Hyundai Tucson GLS 2022. Loaded with features. Comfortable ride with premium interior.",
+    "images": [
+      "https://placehold.co/600x400/374151/ffffff?text=Tucson+2022"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Waseem Brothers",
+      "phone": "042-9988776",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-27"
+  },
+  {
+    "id": 13,
+    "make": "Toyota",
+    "model": "Vitz",
+    "variant": "F 1.0",
+    "year": 2020,
+    "price": 2900000,
+    "city": "Rawalpindi",
+    "km": 32000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "Hatchback",
+    "engineCC": 1000,
+    "color": "Red",
+    "registeredIn": "Rawalpindi",
+    "assembly": "Imported",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Keyless Entry",
+      "Airbags"
+    ],
+    "description": "Japanese imported Toyota Vitz 2020. Very clean condition, fuel efficient. Perfect for city driving.",
+    "images": [
+      "https://placehold.co/600x400/b91c1c/ffffff?text=Vitz+2020"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Zafar Import",
+      "phone": "051-1122334",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-24"
+  },
+  {
+    "id": 14,
+    "make": "Haval",
+    "model": "H6",
+    "variant": "1.5T AWD",
+    "year": 2024,
+    "price": 8450000,
+    "city": "Faisalabad",
+    "km": 5000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "SUV",
+    "engineCC": 1500,
+    "color": "Blue",
+    "registeredIn": "Faisalabad",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Panoramic Sunroof",
+      "Leather Seats",
+      "360 Camera",
+      "Wireless Charging",
+      "Memory Seats"
+    ],
+    "description": "Brand new Haval H6 2024. Almost unused. Top variant with all premium features. Still under full warranty.",
+    "images": [
+      "https://placehold.co/600x400/1e3a5f/ffffff?text=H6+2024"
+    ],
+    "featured": true,
+    "isCertified": true,
+    "seller": {
+      "name": "Haval Motors Faisalabad",
+      "phone": "041-5544332",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-06-03"
+  },
+  {
+    "id": 15,
+    "make": "Daihatsu",
+    "model": "Mira",
+    "variant": "X",
+    "year": 2019,
+    "price": 1850000,
+    "city": "Karachi",
+    "km": 28000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "Hatchback",
+    "engineCC": 660,
+    "color": "Silver",
+    "registeredIn": "Karachi",
+    "assembly": "Imported",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Alloy Rims"
+    ],
+    "description": "Japanese Daihatsu Mira 660cc. Extremely fuel efficient. Perfect first car or city commuter.",
+    "images": [
+      "https://placehold.co/600x400/9ca3af/ffffff?text=Mira+2019"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Ahmed Ali",
+      "phone": "0331-2233445",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-15"
+  },
+  {
+    "id": 16,
+    "make": "Suzuki",
+    "model": "Bolan",
+    "variant": "VX",
+    "year": 2022,
+    "price": 3600000,
+    "city": "Peshawar",
+    "km": 40000,
+    "fuel": "Petrol",
+    "transmission": "Manual",
+    "bodyType": "Van",
+    "engineCC": 800,
+    "color": "White",
+    "registeredIn": "Peshawar",
+    "assembly": "Local",
+    "features": [
+      "AC",
+      "Power Steering"
+    ],
+    "description": "Suzuki Bolan 2022. Ideal for commercial use or large families. Very spacious and reliable.",
+    "images": [
+      "https://placehold.co/600x400/f3f4f6/000000?text=Bolan+2022"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Khan Transport",
+      "phone": "0346-5566778",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-19"
+  },
+  {
+    "id": 17,
+    "make": "Toyota",
+    "model": "Land Cruiser",
+    "variant": "VX 4.0",
+    "year": 2023,
+    "price": 45000000,
+    "city": "Islamabad",
+    "km": 8000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "SUV",
+    "engineCC": 4000,
+    "color": "White",
+    "registeredIn": "Islamabad",
+    "assembly": "Imported",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "4x4",
+      "Leather Seats",
+      "Sunroof",
+      "Navigation",
+      "Cooler Box",
+      "Rear Entertainment",
+      "360 Camera"
+    ],
+    "description": "Brand new Toyota Land Cruiser VX 2023. Top of the line luxury SUV. Driven only 8000 km. Like new.",
+    "images": [
+      "https://placehold.co/600x400/f8fafc/000000?text=Land+Cruiser+2023"
+    ],
+    "featured": true,
+    "isCertified": false,
+    "seller": {
+      "name": "Premium Motors",
+      "phone": "051-9988776",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-30"
+  },
+  {
+    "id": 18,
+    "make": "Changan",
+    "model": "Alsvin",
+    "variant": "Lumiere 1.5 DCT",
+    "year": 2023,
+    "price": 4500000,
+    "city": "Lahore",
+    "km": 16000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "Sedan",
+    "engineCC": 1500,
+    "color": "Red",
+    "registeredIn": "Lahore",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Sunroof",
+      "Touchscreen",
+      "Reverse Camera",
+      "Push Start",
+      "Cruise Control"
+    ],
+    "description": "Changan Alsvin Lumiere 2023. Feature-packed sedan at a great price. Dual clutch automatic.",
+    "images": [
+      "https://placehold.co/600x400/dc2626/ffffff?text=Alsvin+2023"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Omar Shahid",
+      "phone": "0322-3344556",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-23"
+  },
+  {
+    "id": 19,
+    "make": "MG",
+    "model": "HS",
+    "variant": "Excite 1.5T",
+    "year": 2023,
+    "price": 7800000,
+    "city": "Karachi",
+    "km": 12000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "SUV",
+    "engineCC": 1500,
+    "color": "White",
+    "registeredIn": "Karachi",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Panoramic Sunroof",
+      "Leather Seats",
+      "360 Camera",
+      "Digital Cluster",
+      "Wireless Charging"
+    ],
+    "description": "MG HS Excite 2023. Premium SUV with amazing features. Low mileage and in mint condition.",
+    "images": [
+      "https://placehold.co/600x400/ffffff/000000?text=MG+HS+2023"
+    ],
+    "featured": false,
+    "isCertified": true,
+    "seller": {
+      "name": "MG Karachi",
+      "phone": "021-3344556",
+      "type": "Dealer"
+    },
+    "postedDate": "2026-05-31"
+  },
+  {
+    "id": 20,
+    "make": "Suzuki",
+    "model": "Swift",
+    "variant": "GLX CVT",
+    "year": 2021,
+    "price": 3300000,
+    "city": "Gujranwala",
+    "km": 30000,
+    "fuel": "Petrol",
+    "transmission": "Automatic",
+    "bodyType": "Hatchback",
+    "engineCC": 1300,
+    "color": "Blue",
+    "registeredIn": "Gujranwala",
+    "assembly": "Local",
+    "features": [
+      "Power Steering",
+      "Power Windows",
+      "AC",
+      "Touchscreen",
+      "Reverse Camera",
+      "Keyless Entry",
+      "Steering Controls"
+    ],
+    "description": "Suzuki Swift GLX CVT 2021. Sporty hatchback with CVT transmission. Very well maintained.",
+    "images": [
+      "https://placehold.co/600x400/2563eb/ffffff?text=Swift+2021"
+    ],
+    "featured": false,
+    "isCertified": false,
+    "seller": {
+      "name": "Hassan Raza",
+      "phone": "0300-9988776",
+      "type": "Individual"
+    },
+    "postedDate": "2026-05-21"
+  }
+]

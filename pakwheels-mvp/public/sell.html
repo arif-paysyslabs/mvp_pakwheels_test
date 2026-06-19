@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sell Your Car - PakWheels MVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f3f4f6; color: #111827; }
+
+    .header { background: #1f2937; padding: 12px 24px; display: flex; align-items: center; gap: 32px; }
+    .header .logo { display: flex; align-items: center; }
+    .header .logo img { height: 32px; width: auto; }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 24px; }
+
+    h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .subtitle { color: #6b7280; font-size: 14px; margin-bottom: 28px; }
+
+    .form-card { background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #374151; }
+    .required-mark { color: #dc2626; margin-left: 2px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #f59e0b; }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .btn-submit { width: 100%; padding: 14px; background: #f59e0b; color: #111827; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-top: 8px; }
+    .btn-submit:hover { background: #d97706; }
+
+    .success-msg { display: none; background: #d1fae5; color: #065f46; padding: 20px; border-radius: 8px; text-align: center; font-weight: 600; margin-top: 20px; }
+
+    .footer { background: #1f2937; color: #9ca3af; text-align: center; padding: 24px; font-size: 13px; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo"><img src="/logo.svg" alt="PakWheels"></a>
+  </header>
+
+  <div class="container">
+    <h1>Post Your Ad</h1>
+    <p class="subtitle">Sell your car fast on PakWheels. Post an ad in 2 minutes!</p>
+
+    <div class="form-card">
+      <form id="sellForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Make<span class="required-mark" aria-hidden="true">*</span></label>
+            <select id="make" required>
+              <option value="">Select Make</option>
+              <option>Toyota</option>
+              <option>Honda</option>
+              <option>Suzuki</option>
+              <option>KIA</option>
+              <option>Hyundai</option>
+              <option>Haval</option>
+              <option>Changan</option>
+              <option>MG</option>
+              <option>Daihatsu</option>
+              <option>BMW</option>
+              <option>Audi</option>
+              <option>Mercedes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Model<span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="text" id="model" placeholder="e.g. Corolla, Civic" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Year<span class="required-mark" aria-hidden="true">*</span></label>
+            <select id="year" required></select>
+          </div>
+          <div class="form-group">
+            <label>Price (PKR)<span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="number" id="price" placeholder="e.g. 5000000" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>City<span class="required-mark" aria-hidden="true">*</span></label>
+            <select id="city" required>
+              <option value="">Select City</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mileage (km)<span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="number" id="km" placeholder="e.g. 25000" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Fuel Type</label>
+            <select id="fuel">
+              <option>Petrol</option>
+              <option>Diesel</option>
+              <option>CNG</option>
+              <option>Hybrid</option>
+              <option>Electric</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Transmission</label>
+            <select id="transmission">
+              <option>Manual</option>
+              <option>Automatic</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="description" placeholder="Describe your car's condition, features, and history..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name<span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="text" id="sellerName" placeholder="Full name" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number<span class="required-mark" aria-hidden="true">*</span></label>
+            <input type="text" id="sellerPhone" placeholder="03XX-XXXXXXX" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Post Your Ad</button>
+      </form>
+
+      <div id="successMsg" class="success-msg">
+        &#10004; Your ad has been posted successfully!
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    &copy; 2026 PakWheels MVP &mdash; Demo Prototype
+  </footer>
+
+  <script>
+    const yearSelect = document.getElementById('year');
+    for (let y = 2026; y >= 2000; y--) {
+      const opt = document.createElement('option');
+      opt.value = y; opt.textContent = y;
+      yearSelect.appendChild(opt);
+    }
+
+    fetch('/api/cities').then(r => r.json()).then(cities => {
+      const citySel = document.getElementById('city');
+      cities.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c; opt.textContent = c;
+        citySel.appendChild(opt);
+      });
+    });
+
+    document.getElementById('sellForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const car = {
+        make: document.getElementById('make').value,
+        model: document.getElementById('model').value,
+        variant: 'Standard',
+        year: parseInt(document.getElementById('year').value),
+        price: parseInt(document.getElementById('price').value),
+        city: document.getElementById('city').value,
+        km: parseInt(document.getElementById('km').value),
+        fuel: document.getElementById('fuel').value,
+        transmission: document.getElementById('transmission').value,
+        bodyType: 'Sedan',
+        engineCC: 1300,
+        color: 'White',
+        registeredIn: document.getElementById('city').value,
+        assembly: 'Local',
+        features: [],
+        description: document.getElementById('description').value || 'No description provided.',
+        images: ['https://placehold.co/600x400/9ca3af/ffffff?text=New+Listing'],
+        seller: {
+          name: document.getElementById('sellerName').value,
+          phone: document.getElementById('sellerPhone').value,
+          type: 'Individual'
+        }
+      };
+
+      await fetch('/api/cars', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(car)
+      });
+
+      document.getElementById('sellForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
