@@ -15,6 +15,8 @@ A vehicle listing platform (cars & bikes) for the Pakistani market. Built with E
 - [Testing](#-testing)
 - [Linting](#-linting)
 - [Architecture & Conventions](#-architecture--conventions)
+- [Dependency Graph](#-dependency-graph)
+- [Obsidian Graph](#-obsidian-graph)
 - [Known Limitations](#-known-limitations)
 
 ---
@@ -238,6 +240,211 @@ The project uses ESLint 10+ with a flat config and the `eslint-plugin-security` 
 - **Input Validation**: `asText()`, `asInteger()`, `asTextArray()`, `asImageArray()` helpers validate and sanitize POST body fields.
 - **Auto-set Fields**: `featured`, `isCertified`, `postedDate` are automatically set on POST — not client-controllable.
 - **Security**: ESLint security plugin rules enforced. Inline disable for `security/detect-non-literal-fs-filename` on JSON file ops (intentional).
+
+---
+
+## 📊 Dependency Graph
+
+### npm Package Dependencies
+
+```mermaid
+graph TD
+    subgraph Production Dependencies
+        EXPRESS[express ^4.21.0]
+    end
+
+    subgraph Dev Dependencies
+        C8[c8 ^11.0.0]
+        ESLINT[eslint ^10.4.1]
+        SEC_PLUGIN[eslint-plugin-security ^4.0.0]
+    end
+
+    APP[pakwheels-mvp] --> EXPRESS
+    APP --> C8
+    APP --> ESLINT
+    ESLINT --> SEC_PLUGIN
+
+    style APP fill:#f59e0b,stroke:#1f2937,color:#fff
+    style EXPRESS fill:#059669,stroke:#1f2937,color:#fff
+    style C8 fill:#3b82f6,stroke:#1f2937,color:#fff
+    style ESLINT fill:#3b82f6,stroke:#1f2937,color:#fff
+    style SEC_PLUGIN fill:#3b82f6,stroke:#1f2937,color:#fff
+```
+
+### Internal Module Dependencies
+
+```mermaid
+graph TD
+    SERVER[server.js] -->|createApp| APP[app.js]
+    APP -->|readJSON / writeJSON| DATA[data/*.json]
+    APP -->|express.static| PUBLIC[public/*]
+    APP -->|serves| API[API Routes]
+
+    subgraph API Routes
+        CARS_GET[GET /api/cars]
+        CARS_ID[GET /api/cars/:id]
+        CARS_POST[POST /api/cars]
+        BIKES_GET[GET /api/bikes]
+        BIKES_ID[GET /api/bikes/:id]
+        BIKES_POST[POST /api/bikes]
+        MAKES[GET /api/makes]
+        CITIES[GET /api/cities]
+    end
+
+    CARS_GET -->|reads| CARS_JSON[cars.json]
+    CARS_ID -->|reads| CARS_JSON
+    CARS_POST -->|writes| CARS_JSON
+    BIKES_GET -->|reads| BIKES_JSON[bikes.json]
+    BIKES_ID -->|reads| BIKES_JSON
+    BIKES_POST -->|writes| BIKES_JSON
+    MAKES -->|reads| MAKES_JSON[makes.json]
+    CITIES -->|reads| CITIES_JSON[cities.json]
+
+    subgraph Frontend
+        INDEX[index.html] -->|fetch| API
+        CAR[car.html] -->|fetch| API
+        SELL[sell.html] -->|POST| API
+        APIDOCS[api-docs.html] -->|reads| OPENAPI[openapi.json]
+    end
+
+    subgraph Tests
+        API_TEST[api.test.js] -->|imports| APP
+        DATA_TEST[data.test.js] -->|reads| DATA
+    end
+
+    style SERVER fill:#f59e0b,stroke:#1f2937,color:#fff
+    style APP fill:#059669,stroke:#1f2937,color:#fff
+    style DATA fill:#ef4444,stroke:#1f2937,color:#fff
+    style PUBLIC fill:#8b5cf6,stroke:#1f2937,color:#fff
+    style API fill:#3b82f6,stroke:#1f2937,color:#fff
+```
+
+---
+
+## 🔮 Obsidian Graph
+
+The obsidian graph below visualizes how all concepts, modules, and data entities in the project are interconnected — similar to an Obsidian vault knowledge graph.
+
+```mermaid
+graph LR
+    %% Core Modules
+    SERVER[server.js]
+    APP[app.js]
+    ESLINT_CFG[eslint.config.js]
+
+    %% Data Layer
+    CARS[cars.json]
+    BIKES[bikes.json]
+    MAKES[makes.json]
+    CITIES[cities.json]
+
+    %% Frontend Pages
+    INDEX[index.html]
+    CAR[car.html]
+    SELL[sell.html]
+    APIDOCS[api-docs.html]
+    OPENAPI[openapi.json]
+
+    %% API Endpoints
+    API_CARS[/api/cars]
+    API_BIKES[/api/bikes]
+    API_MAKES[/api/makes]
+    API_CITIES[/api/cities]
+
+    %% Validation Helpers
+    ASTEXT[asText]
+    ASINT[asInteger]
+    ASTEXTARR[asTextArray]
+    ASIMGARR[asImageArray]
+
+    %% Test Files
+    API_TEST[api.test.js]
+    DATA_TEST[data.test.js]
+
+    %% NPM Packages
+    EXPRESS_PKG[express]
+    C8_PKG[c8]
+    ESLINT_PKG[eslint]
+    SEC_PKG[eslint-plugin-security]
+
+    %% Relationships
+    SERVER --- APP
+    APP --- CARS
+    APP --- BIKES
+    APP --- MAKES
+    APP --- CITIES
+    APP --- API_CARS
+    APP --- API_BIKES
+    APP --- API_MAKES
+    APP --- API_CITIES
+    APP --- ASTEXT
+    APP --- ASINT
+    APP --- ASTEXTARR
+    APP --- ASIMGARR
+    APP --- EXPRESS_PKG
+
+    API_CARS --- CARS
+    API_BIKES --- BIKES
+    API_MAKES --- MAKES
+    API_CITIES --- CITIES
+
+    INDEX --- API_CARS
+    INDEX --- API_BIKES
+    CAR --- API_CARS
+    SELL --- API_CARS
+    SELL --- API_BIKES
+    SELL --- API_MAKES
+    SELL --- API_CITIES
+    APIDOCS --- OPENAPI
+
+    API_TEST --- APP
+    DATA_TEST --- CARS
+    DATA_TEST --- BIKES
+    DATA_TEST --- MAKES
+    DATA_TEST --- CITIES
+
+    ESLINT_CFG --- ESLINT_PKG
+    ESLINT_CFG --- SEC_PKG
+
+    %% Styling
+    style SERVER fill:#f59e0b,stroke:#1f2937,color:#fff
+    style APP fill:#f59e0b,stroke:#1f2937,color:#fff
+    style CARS fill:#ef4444,stroke:#1f2937,color:#fff
+    style BIKES fill:#ef4444,stroke:#1f2937,color:#fff
+    style MAKES fill:#ef4444,stroke:#1f2937,color:#fff
+    style CITIES fill:#ef4444,stroke:#1f2937,color:#fff
+    style INDEX fill:#8b5cf6,stroke:#1f2937,color:#fff
+    style CAR fill:#8b5cf6,stroke:#1f2937,color:#fff
+    style SELL fill:#8b5cf6,stroke:#1f2937,color:#fff
+    style APIDOCS fill:#8b5cf6,stroke:#1f2937,color:#fff
+    style OPENAPI fill:#8b5cf6,stroke:#1f2937,color:#fff
+    style API_CARS fill:#3b82f6,stroke:#1f2937,color:#fff
+    style API_BIKES fill:#3b82f6,stroke:#1f2937,color:#fff
+    style API_MAKES fill:#3b82f6,stroke:#1f2937,color:#fff
+    style API_CITIES fill:#3b82f6,stroke:#1f2937,color:#fff
+    style ASTEXT fill:#059669,stroke:#1f2937,color:#fff
+    style ASINT fill:#059669,stroke:#1f2937,color:#fff
+    style ASTEXTARR fill:#059669,stroke:#1f2937,color:#fff
+    style ASIMGARR fill:#059669,stroke:#1f2937,color:#fff
+    style API_TEST fill:#6366f1,stroke:#1f2937,color:#fff
+    style DATA_TEST fill:#6366f1,stroke:#1f2937,color:#fff
+    style EXPRESS_PKG fill:#94a3b8,stroke:#1f2937,color:#fff
+    style C8_PKG fill:#94a3b8,stroke:#1f2937,color:#fff
+    style ESLINT_PKG fill:#94a3b8,stroke:#1f2937,color:#fff
+    style SEC_PKG fill:#94a3b8,stroke:#1f2937,color:#fff
+    style ESLINT_CFG fill:#94a3b8,stroke:#1f2937,color:#fff
+```
+
+**Legend:**
+| Color     | Category              |
+|-----------|-----------------------|
+| 🟡 Amber  | Core entry modules    |
+| 🔴 Red    | Data files (JSON)     |
+| 🟣 Purple | Frontend pages        |
+| 🔵 Blue   | API endpoints         |
+| 🟢 Green  | Validation helpers    |
+| 🔵 Indigo | Test files            |
+| ⚪ Gray   | NPM packages & config |
 
 ---
 
