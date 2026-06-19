@@ -470,3 +470,224 @@ describe('Bike API endpoints', () => {
     writeJSON('bikes.json', JSON.parse(originalBikes));
   });
 });
+
+describe('AI Valuation API', () => {
+  it('POST /api/valuation returns valuation for a car', async () => {
+    const payload = {
+      type: 'car',
+      make: 'Toyota',
+      model: 'Corolla',
+      year: 2021,
+      km: 35000,
+      city: 'Karachi',
+      fuel: 'Petrol',
+      transmission: 'Automatic'
+    };
+
+    const { status, body } = await fetch(`${baseUrl}/api/valuation`, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+
+    assert.equal(status, 200);
+    assert.equal(body.type, 'car');
+    assert.ok(body.valuation);
+    assert.ok(body.valuation.estimatedPrice > 0);
+    assert.ok(body.valuation.priceRange);
+    assert.ok(body.valuation.priceRange.low > 0);
+    assert.ok(body.valuation.priceRange.high > 0);
+    assert.ok(body.valuation.priceRange.low <= body.valuation.priceRange.high);
+    assert.ok(['high', 'medium', 'low'].includes(body.valuation.confidence));
+    assert.ok(Array.isArray(body.valuation.comparables));
+    assert.ok(body.valuation.comparables.length > 0);
+  });
+
+  it('POST /api/valuation returns valuation for a bike', async () => {
+    const payload = {
+      type: 'bike',
+      make: 'Honda',
+      model: 'CG 125',
+      year: 2022,
+      km: 12000,
+      city: 'Karachi',
+      fuel: 'Petrol',
+      transmission: 'Manual'
+    };
+
+    const { status, body } = await fetch(`${baseUrl}/api/valuation`, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+
+    assert.equal(status, 200);
+    assert.equal(body.type, 'bike');
+    assert.ok(body.valuation.estimatedPrice > 0);
+    assert.ok(body.valuation.comparables.length > 0);
+  });
+
+  it('POST /api/valuation returns depreciation forecast', async () => {
+    const payload = {
+      type: 'car',
+      make: 'Honda',
+      model: 'Civic',
+      year: 2020,
+      km: 42000,
+      city: 'Lahore',
+      fuel: 'Petrol',
+      transmission: 'Automatic'
+    };
+
+    const { body } = await fetch(`${baseUrl}/api/valuation`, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+
+    assert.ok(body.valuation.depreciation);
+    assert.equal(body.valuation.depreciation.length, 3);
+    assert.ok(body.valuation.depreciation[0].year > 2026);
+    assert.ok(body.valuation.depreciation[0].estimatedValue > 0);
+  });
+
+  it('POST /api/valuation rejects missing required fields', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/valuation`, {
+      method: 'POST',
+      body: JSON.stringify({ type: 'car' })
+    });
+
+    assert.equal(status, 400);
+    assert.ok(body.error);
+  });
+
+  it('POST /api/valuation rejects invalid request body', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/valuation`, {
+      method: 'POST',
+      body: JSON.stringify([])
+    });
+
+    assert.equal(status, 400);
+    assert.ok(body.error);
+  });
+
+  it('POST /api/valuation handles rare make/model with low confidence', async () => {
+    const payload = {
+      type: 'car',
+      make: 'RareBrand',
+      model: 'UnknownModel',
+      year: 2020,
+      km: 50000,
+      city: 'Quetta',
+      fuel: 'Petrol',
+      transmission: 'Manual'
+    };
+
+    const { status, body } = await fetch(`${baseUrl}/api/valuation`, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+
+    assert.equal(status, 200);
+    // May have no estimated price if no comparables found
+    if (body.valuation.estimatedPrice === null) {
+      assert.equal(body.valuation.confidence, 'low');
+      assert.equal(body.valuation.comparables.length, 0);
+    }
+  });
+
+  it('GET /api/cars/:id/valuation returns valuation with deal score', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/cars/1/valuation`);
+
+    assert.equal(status, 200);
+    assert.ok(body.estimatedPrice > 0);
+    assert.ok(body.priceRange);
+    assert.ok(['high', 'medium', 'low'].includes(body.confidence));
+    assert.ok(body.dealScore);
+    assert.ok([
+      'great_deal', 'good_price', 'fair_price', 'slightly_overpriced', 'overpriced'
+    ].includes(body.dealScore));
+  });
+
+  it('GET /api/cars/:id/valuation returns 404 for non-existent car', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/cars/99999/valuation`);
+    assert.equal(status, 404);
+    assert.ok(body.error);
+  });
+
+  it('GET /api/bikes/:id/valuation returns valuation with deal score', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/bikes/1001/valuation`);
+
+    assert.equal(status, 200);
+    assert.ok(body.estimatedPrice > 0);
+    assert.ok(body.dealScore);
+  });
+
+  it('GET /api/bikes/:id/valuation returns 404 for non-existent bike', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/bikes/99999/valuation`);
+    assert.equal(status, 404);
+    assert.ok(body.error);
+  });
+});
+
+describe('Smart Recommendations API', () => {
+  it('GET /api/cars/:id/recommendations returns similar cars', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/cars/1/recommendations`);
+
+    assert.equal(status, 200);
+    assert.ok(Array.isArray(body));
+    assert.ok(body.length > 0);
+    assert.ok(body[0].id);
+    assert.ok(body[0].make);
+    assert.ok(body[0].model);
+    assert.ok(body[0].price > 0);
+    assert.ok(body[0].matchScore >= 0);
+    // Should not include the target car itself
+    assert.ok(!body.some(r => r.id === 1));
+  });
+
+  it('GET /api/cars/:id/recommendations respects limit param', async () => {
+    const { body } = await fetch(`${baseUrl}/api/cars/1/recommendations?limit=3`);
+    assert.ok(body.length <= 3);
+  });
+
+  it('GET /api/cars/:id/recommendations caps limit at 20', async () => {
+    const { body } = await fetch(`${baseUrl}/api/cars/1/recommendations?limit=50`);
+    assert.ok(body.length <= 20);
+  });
+
+  it('GET /api/cars/:id/recommendations returns 404 for non-existent car', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/cars/99999/recommendations`);
+    assert.equal(status, 404);
+    assert.ok(body.error);
+  });
+
+  it('GET /api/bikes/:id/recommendations returns similar bikes', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/bikes/1001/recommendations`);
+
+    assert.equal(status, 200);
+    assert.ok(Array.isArray(body));
+    assert.ok(body.length > 0);
+    assert.ok(!body.some(r => r.id === 1001));
+  });
+
+  it('GET /api/bikes/:id/recommendations returns 404 for non-existent bike', async () => {
+    const { status, body } = await fetch(`${baseUrl}/api/bikes/99999/recommendations`);
+    assert.equal(status, 404);
+    assert.ok(body.error);
+  });
+
+  it('recommendations are sorted by match score descending', async () => {
+    const { body } = await fetch(`${baseUrl}/api/cars/2/recommendations`);
+    for (let i = 1; i < body.length; i++) {
+      assert.ok(body[i - 1].matchScore >= body[i].matchScore);
+    }
+  });
+});
+
+describe('Valuation page route', () => {
+  it('GET /valuation serves the valuation page', async () => {
+    const { status, body } = await fetch(`${baseUrl}/valuation`);
+    assert.equal(status, 200);
+    assert.equal(typeof body, 'string');
+    assert.match(body, /AI Car Valuation/i);
+    assert.match(body, /valuationForm/);
+  });
+});

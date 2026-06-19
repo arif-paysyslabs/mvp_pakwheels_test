@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Car Valuation - PakWheels MVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f3f4f6; color: #111827; }
+    a { text-decoration: none; color: inherit; }
+
+    .header { background: #1f2937; padding: 12px 24px; display: flex; align-items: center; gap: 32px; }
+    .header .logo { display: flex; align-items: center; }
+    .header .logo img { height: 32px; width: auto; }
+    .header nav { display: flex; gap: 20px; flex: 1; }
+    .header nav a { color: #d1d5db; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .header nav a:hover { color: #fff; }
+    .header .btn-post { background: #f59e0b; color: #111827; padding: 8px 20px; border-radius: 6px; font-weight: 600; font-size: 14px; }
+
+    .hero { background: linear-gradient(135deg, #1f2937 0%, #374151 100%); padding: 40px 24px; text-align: center; }
+    .hero h1 { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .hero p { color: #9ca3af; font-size: 15px; }
+
+    .container { max-width: 800px; margin: 0 auto; padding: 24px; }
+
+    .form-card { background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 24px; }
+    .form-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #374151; }
+    .required-mark { color: #dc2626; margin-left: 2px; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
+    .form-group input:focus, .form-group select:focus { border-color: #f59e0b; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .btn-valuate { width: 100%; padding: 14px; background: #f59e0b; color: #111827; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-valuate:hover { background: #d97706; }
+    .btn-valuate:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Results */
+    .result-card { background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: none; }
+    .result-card.visible { display: block; }
+    .result-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+
+    .valuation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .valuation-card { background: #f9fafb; border-radius: 10px; padding: 20px; text-align: center; }
+    .valuation-card .label { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; margin-bottom: 6px; }
+    .valuation-card .value { font-size: 26px; font-weight: 800; color: #059669; }
+    .valuation-card .value.low-conf { color: #d97706; }
+    .valuation-card .sub { font-size: 12px; color: #6b7280; margin-top: 4px; }
+
+    .confidence-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .confidence-badge.high { background: #d1fae5; color: #065f46; }
+    .confidence-badge.medium { background: #fef3c7; color: #92400e; }
+    .confidence-badge.low { background: #fee2e2; color: #991b1b; }
+
+    .depreciation-section { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+    .depreciation-section h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #374151; }
+    .depreciation-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f3f4f6; font-size: 14px; }
+    .depreciation-row:last-child { border-bottom: none; }
+    .depreciation-row .year { color: #6b7280; }
+    .depreciation-row .val { font-weight: 700; color: #374151; }
+
+    .comparables-section { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+    .comparables-section h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #374151; }
+    .comp-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #f9fafb; border-radius: 8px; margin-bottom: 8px; font-size: 13px; }
+    .comp-item .comp-title { font-weight: 600; }
+    .comp-item .comp-price { color: #059669; font-weight: 700; }
+    .comp-item .comp-sim { font-size: 11px; color: #6b7280; }
+
+    .no-result { text-align: center; padding: 40px; color: #6b7280; }
+    .no-result h3 { font-size: 18px; margin-bottom: 8px; }
+    .no-result p { font-size: 14px; }
+
+    .loader { text-align: center; padding: 20px; }
+    .loader::after { content: ''; display: inline-block; width: 24px; height: 24px; border: 3px solid #e5e7eb; border-top-color: #f59e0b; border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .footer { background: #1f2937; color: #9ca3af; text-align: center; padding: 24px; font-size: 13px; margin-top: 40px; }
+
+    @media (max-width: 768px) {
+      .header nav { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .valuation-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo"><img src="/logo.svg" alt="PakWheels"></a>
+    <nav>
+      <a href="/?type=car">Used Cars</a>
+      <a href="/?type=bike">Bikes</a>
+      <a href="/valuation">AI Valuation</a>
+    </nav>
+    <a href="/sell" class="btn-post" style="margin-left:auto;">Post an Ad</a>
+  </header>
+
+  <section class="hero">
+    <h1>🤖 AI Car Valuation</h1>
+    <p>Get an instant fair market price estimate based on real listings data</p>
+  </section>
+
+  <div class="container">
+    <div class="form-card">
+      <h2>📝 Enter Vehicle Details</h2>
+      <form id="valuationForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Vehicle Type</label>
+            <select id="vType">
+              <option value="car">Car</option>
+              <option value="bike">Bike</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Make <span class="required-mark">*</span></label>
+            <input type="text" id="vMake" placeholder="e.g. Toyota" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Model <span class="required-mark">*</span></label>
+            <input type="text" id="vModel" placeholder="e.g. Corolla" required>
+          </div>
+          <div class="form-group">
+            <label>Year <span class="required-mark">*</span></label>
+            <input type="number" id="vYear" placeholder="e.g. 2021" min="1990" max="2026" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Mileage (km) <span class="required-mark">*</span></label>
+            <input type="number" id="vKm" placeholder="e.g. 35000" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <select id="vCity"><option value="">Any City</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Fuel Type</label>
+            <select id="vFuel">
+              <option value="Petrol">Petrol</option>
+              <option value="Diesel">Diesel</option>
+              <option value="CNG">CNG</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="Electric">Electric</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Transmission</label>
+            <select id="vTransmission">
+              <option value="Manual">Manual</option>
+              <option value="Automatic">Automatic</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn-valuate" id="btnValuate">🔍 Get Free Valuation</button>
+      </form>
+    </div>
+
+    <div class="result-card" id="resultCard">
+      <h2>📊 Valuation Result</h2>
+      <div id="resultContent"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    &copy; 2026 PakWheels MVP &mdash; Demo Prototype
+  </footer>
+
+  <script>
+    function formatPrice(pkr) { return 'PKR ' + pkr.toLocaleString('en-PK'); }
+
+    function escapeHTML(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '<')
+        .replace(/>/g, '>')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // Populate cities dropdown
+    async function init() {
+      try {
+        const cities = await fetch('/api/cities').then(r => r.json());
+        const sel = document.getElementById('vCity');
+        cities.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c; opt.textContent = c;
+          sel.appendChild(opt);
+        });
+      } catch { /* ignore */ }
+    }
+
+    document.getElementById('valuationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnValuate');
+      const resultCard = document.getElementById('resultCard');
+      const resultContent = document.getElementById('resultContent');
+
+      btn.disabled = true;
+      btn.textContent = '⏳ Calculating...';
+      resultCard.classList.remove('visible');
+
+      const payload = {
+        type: document.getElementById('vType').value,
+        make: document.getElementById('vMake').value.trim(),
+        model: document.getElementById('vModel').value.trim(),
+        year: parseInt(document.getElementById('vYear').value, 10),
+        km: parseInt(document.getElementById('vKm').value, 10),
+        city: document.getElementById('vCity').value || 'Karachi',
+        fuel: document.getElementById('vFuel').value,
+        transmission: document.getElementById('vTransmission').value
+      };
+
+      try {
+        const res = await fetch('/api/valuation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          resultContent.innerHTML = `<div class="no-result"><h3>Could not estimate value</h3><p>${escapeHTML(err.error || 'Please check your inputs and try again.')}</p></div>`;
+          resultCard.classList.add('visible');
+          return;
+        }
+
+        const data = await res.json();
+        const val = data.valuation;
+
+        if (!val.estimatedPrice) {
+          resultContent.innerHTML = `<div class="no-result"><h3>Not enough data</h3><p>We couldn't find enough comparable listings to estimate the value. Try a different make/model or city.</p></div>`;
+          resultCard.classList.add('visible');
+          return;
+        }
+
+        const confClass = val.confidence || 'low';
+        const confLabel = val.confidence ? val.confidence.charAt(0).toUpperCase() + val.confidence.slice(1) : 'Low';
+
+        let html = `
+          <div class="valuation-grid">
+            <div class="valuation-card">
+              <div class="label">Estimated Market Value</div>
+              <div class="value ${confClass !== 'high' ? 'low-conf' : ''}">${escapeHTML(formatPrice(val.estimatedPrice))}</div>
+              <div class="sub">Based on ${val.comparables.length} comparable listing${val.comparables.length !== 1 ? 's' : ''}</div>
+            </div>
+            <div class="valuation-card">
+              <div class="label">Price Range</div>
+              <div class="value" style="font-size:18px;">${escapeHTML(formatPrice(val.priceRange.low))}<br>– ${escapeHTML(formatPrice(val.priceRange.high))}</div>
+              <div class="sub"><span class="confidence-badge ${confClass}">${confLabel} Confidence</span></div>
+            </div>
+          </div>`;
+
+        if (val.depreciation && val.depreciation.length > 0) {
+          html += `
+            <div class="depreciation-section">
+              <h4>📉 Depreciation Forecast</h4>
+              ${val.depreciation.map(d => `
+                <div class="depreciation-row">
+                  <span class="year">${d.year}</span>
+                  <span class="val">${escapeHTML(formatPrice(d.estimatedValue))}</span>
+                </div>
+              `).join('')}
+            </div>`;
+        }
+
+        if (val.comparables && val.comparables.length > 0) {
+          html += `
+            <div class="comparables-section">
+              <h4>🔍 Comparable Listings Used</h4>
+              ${val.comparables.map(c => `
+                <div class="comp-item">
+                  <span class="comp-title">${escapeHTML(c.make)} ${escapeHTML(c.model)} ${c.year}</span>
+                  <span class="comp-price">${escapeHTML(formatPrice(c.price))}</span>
+                  <span class="comp-sim">${Math.round(c.similarity * 100)}% match</span>
+                </div>
+              `).join('')}
+            </div>`;
+        }
+
+        resultContent.innerHTML = html;
+        resultCard.classList.add('visible');
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (err) {
+        resultContent.innerHTML = `<div class="no-result"><h3>Something went wrong</h3><p>Please try again later.</p></div>`;
+        resultCard.classList.add('visible');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🔍 Get Free Valuation';
+      }
+    });
+
+    init();
+  </script>
+</body>
+</html>
