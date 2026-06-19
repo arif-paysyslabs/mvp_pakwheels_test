@@ -677,6 +677,7 @@ describe('Smart Recommendations API', () => {
   it('recommendations are sorted by match score descending', async () => {
     const { body } = await fetch(`${baseUrl}/api/cars/2/recommendations`);
     for (let i = 1; i < body.length; i++) {
+      // eslint-disable-next-line security/detect-object-injection
       assert.ok(body[i - 1].matchScore >= body[i].matchScore);
     }
   });
